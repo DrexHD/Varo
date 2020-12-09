@@ -12,6 +12,7 @@ import java.util.*;
 public class SessionManager {
 
     public static HashMap<UUID, List<SessionEntry>> data = new HashMap<>();
+    public static boolean loaded = false;
 
     public static CompoundTag toNBT() {
         CompoundTag tag = new CompoundTag();
@@ -37,6 +38,7 @@ public class SessionManager {
             }
             data.put(uuid, entries);
         }
+        loaded = true;
     }
 
     public static SessionEntry getCurrentSession(UUID uuid) {
@@ -44,6 +46,10 @@ public class SessionManager {
             if (!sessionEntry.isComplete()) return sessionEntry;
         }
         throw new RuntimeException("Couldn't find the current session for " + uuid);
+    }
+
+    public static List<SessionEntry> getEntries(UUID uuid) {
+        return data.containsKey(uuid) ? data.get(uuid) : new ArrayList<>();
     }
 
     public static void addSession(UUID uuid) {

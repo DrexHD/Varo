@@ -21,6 +21,7 @@ public class MixinLevelStorage {
 
     @Inject(method = "backupLevelDataFile(Lnet/minecraft/util/registry/DynamicRegistryManager;Lnet/minecraft/world/SaveProperties;Lnet/minecraft/nbt/CompoundTag;)V", at = @At(value = "RETURN"))
     public void onServerSave(DynamicRegistryManager dynamicRegistryManager, SaveProperties saveProperties, @Nullable CompoundTag compoundTag, CallbackInfo ci) {
+        if (!SessionManager.loaded) return;
         try {
             CompoundTag tag = SessionManager.toNBT();
             Mod.DATA.createNewFile();
