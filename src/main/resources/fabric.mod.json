@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "varo",
+  "version": "${version}",
+
+  "name": "Varo",
+  "description": "Minecraft vanilla roleplay pvp implementation mod",
+  "authors": [
+    "Drex"
+  ],
+  "icon": "assets/varo/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.drex.varo.Mod"
+    ]
+  },
+  "mixins": [
+    "varo.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  }
+}
