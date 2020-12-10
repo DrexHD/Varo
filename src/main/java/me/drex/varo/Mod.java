@@ -1,5 +1,6 @@
 package me.drex.varo;
 
+import me.drex.varo.commands.TimeLeftCommand;
 import me.drex.varo.commands.TimePlayedCommand;
 import me.drex.varo.session.SessionManager;
 import net.fabricmc.api.DedicatedServerModInitializer;
@@ -24,6 +25,7 @@ public class Mod implements DedicatedServerModInitializer {
         });
         CommandRegistrationCallback.EVENT.register((dispatcher, b) -> {
             TimePlayedCommand.register(dispatcher);
+            TimeLeftCommand.register(dispatcher);
         });
     }
 }

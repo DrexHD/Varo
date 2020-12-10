@@ -13,6 +13,7 @@ public class SessionManager {
 
     public static HashMap<UUID, List<SessionEntry>> data = new HashMap<>();
     public static boolean loaded = false;
+    private static long MAXIMUM_TIME = 5400000L;
 
     public static CompoundTag toNBT() {
         CompoundTag tag = new CompoundTag();
@@ -60,6 +61,26 @@ public class SessionManager {
         } else {
             data.put(uuid, new ArrayList<>(Collections.singletonList(entry)));
         }
+    }
+
+    public static long getPlaytimeBetween(UUID uuid, long from, long to) {
+        long playtime = 0;
+        for (SessionEntry entry : getEntries(uuid)) {
+            playtime += Math.max(0, Math.min(entry.getEnd(), to) - Math.max(from, entry.start));
+        }
+        return playtime;
+    }
+
+    public static long getTimeLeft(UUID uuid) {
+        Date date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setDate(date.getDate() - 1);
+        long from = date.getTime();
+        date.setDate(date.getDate() + 2);
+        long to = date.getTime();
+        return MAXIMUM_TIME - SessionManager.getPlaytimeBetween(uuid, from, to);
     }
 
 }

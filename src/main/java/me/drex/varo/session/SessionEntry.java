@@ -19,7 +19,6 @@ public class SessionEntry {
         this.start = tag.getLong("start");
         end = tag.contains("end") ? Optional.of(tag.getLong("end")) : Optional.empty();
     }
-
     public CompoundTag toNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putLong("start", this.start);
@@ -35,8 +34,12 @@ public class SessionEntry {
         return end.isPresent();
     }
 
+    public long getEnd() {
+        return end.orElseGet(() -> new Date().getTime());
+    }
+
     public long getPlaytime() {
-        return end.map(aLong -> aLong - start).orElseGet(() -> new Date().getTime() - start);
+        return getEnd() - start;
     }
 
 }

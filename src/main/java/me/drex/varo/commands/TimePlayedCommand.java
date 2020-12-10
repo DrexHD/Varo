@@ -35,10 +35,12 @@ public class TimePlayedCommand {
         long pt = 0;
         for (SessionEntry entry : SessionManager.getEntries(ctx.getSource().getPlayer().getUuid())) {
             pt += entry.getPlaytime();
-            hover.append(new LiteralText(new SimpleDateFormat("dd MMM yy HH:mm:ss").format(new Date(entry.start)) + ": ").formatted(Formatting.YELLOW))
+            hover.append(new LiteralText(new SimpleDateFormat("dd MMM yy HH:mm:ss").format(new Date(entry.start)) + " - " + new SimpleDateFormat("HH:mm:ss").format(entry.end.map(Date::new).orElseGet(Date::new)) + ": ").formatted(Formatting.YELLOW))
                     .append(new LiteralText(TimeDifferenceUtil.formatDiff(entry.getPlaytime()) + "\n").formatted(Formatting.WHITE));
         }
-        MutableText text = new LiteralText("You have played ").formatted(Formatting.WHITE).append(new LiteralText(TimeDifferenceUtil.formatDiff(pt)).formatted(Formatting.GRAY)).styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)));
+        MutableText text = new LiteralText("You have played ").formatted(Formatting.WHITE)
+                .append(new LiteralText(TimeDifferenceUtil.formatDiff(pt)).formatted(Formatting.GRAY)).styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)))
+                .append(new LiteralText(".").formatted(Formatting.WHITE));
         ctx.getSource().getPlayer().sendMessage(text, false);
         return (int) pt;
     }
