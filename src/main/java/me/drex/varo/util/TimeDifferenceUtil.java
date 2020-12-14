@@ -1,7 +1,6 @@
 package me.drex.varo.util;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class TimeDifferenceUtil {
@@ -11,7 +10,7 @@ public class TimeDifferenceUtil {
     public static String formatDateDiff(Calendar fromDate, Calendar toDate) {
         boolean future = false;
         if (toDate.equals(fromDate)) {
-            return "Now";
+            return "-";
         }
         if (toDate.after(fromDate)) {
             future = true;
@@ -35,7 +34,7 @@ public class TimeDifferenceUtil {
             }
         }
         if (sb.length() == 0) {
-            return "Now";
+            return "-";
         }
         return sb.toString().trim();
     }
