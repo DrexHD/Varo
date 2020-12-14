@@ -1,6 +1,7 @@
 package me.drex.varo.session;
 
 import me.drex.varo.Mod;
+import me.drex.varo.util.TimeDifferenceUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
@@ -71,7 +72,7 @@ public class SessionManager {
         return playtime;
     }
 
-    public static long getTimeLeft(UUID uuid) {
+    public static long yesterday(UUID uuid) {
         Date date = new Date();
         date.setHours(0);
         date.setMinutes(0);
@@ -80,11 +81,22 @@ public class SessionManager {
         long from = date.getTime();
         date.setDate(date.getDate() + 1);
         long to = date.getTime();
-        long yesterday = SessionManager.getPlaytimeBetween(uuid, from, to);
+        return SessionManager.getPlaytimeBetween(uuid, from, to);
+    }
+
+    public static long today(UUID uuid) {
+        Date date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        long from = date.getTime();
         date.setDate(date.getDate() + 1);
-        from = date.getTime();
-        long today = SessionManager.getPlaytimeBetween(uuid, to, from);
-        return MAXIMUM_TIME - Math.min(MAXIMUM_TIME / 2, yesterday) + today;
+        long to = date.getTime();
+        return SessionManager.getPlaytimeBetween(uuid, from, to);
+    }
+
+    public static long getTimeLeft(UUID uuid) {
+        return MAXIMUM_TIME - (Math.min(MAXIMUM_TIME / 2, yesterday(uuid)) + today(uuid));
     }
 
 }
