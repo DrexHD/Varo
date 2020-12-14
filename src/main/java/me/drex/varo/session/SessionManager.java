@@ -78,9 +78,13 @@ public class SessionManager {
         date.setSeconds(0);
         date.setDate(date.getDate() - 1);
         long from = date.getTime();
-        date.setDate(date.getDate() + 2);
+        date.setDate(date.getDate() + 1);
         long to = date.getTime();
-        return MAXIMUM_TIME - SessionManager.getPlaytimeBetween(uuid, from, to);
+        long yesterday = SessionManager.getPlaytimeBetween(uuid, from, to);
+        date.setDate(date.getDate() + 1);
+        from = date.getTime();
+        long today = SessionManager.getPlaytimeBetween(uuid, to, from);
+        return MAXIMUM_TIME - Math.min(MAXIMUM_TIME / 2, yesterday) + today;
     }
 
 }
