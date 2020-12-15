@@ -6,6 +6,7 @@ import me.drex.varo.session.SessionManager;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.server.MinecraftServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.io.IOException;
 public class Mod implements DedicatedServerModInitializer {
 
     public static final File DATA = new File(System.getProperty("user.dir") + "/config/sessions.dat");
+    public static MinecraftServer server;
+
 
     @Override
     public void onInitializeServer() {

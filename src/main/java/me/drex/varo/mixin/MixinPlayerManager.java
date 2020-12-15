@@ -25,7 +25,7 @@ public class MixinPlayerManager {
 
     @Inject(method = "checkCanJoin", at = @At(value = "HEAD"), cancellable = true)
     public void blockIfNoPlaytime(SocketAddress address, GameProfile profile, CallbackInfoReturnable<Text> cir) {
-        if (SessionManager.getTimeLeft(profile.getId()) < 0) cir.setReturnValue(new LiteralText("You don't have any time left, wait until tomorrow to rejoin."));
+        if (SessionManager.getTimeLeft(profile.getId()) < 0) cir.setReturnValue(new LiteralText("Du hast keine Zeit mehr übrig, schau doch morgen wieder vorbei :)"));
     }
 
 }

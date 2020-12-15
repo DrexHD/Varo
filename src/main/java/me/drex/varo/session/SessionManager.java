@@ -1,7 +1,6 @@
 package me.drex.varo.session;
 
 import me.drex.varo.Mod;
-import me.drex.varo.util.TimeDifferenceUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;

@@ -32,10 +32,10 @@ public class TimeLeftCommand {
 
     public static int execute(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         UUID uuid = ctx.getSource().getPlayer().getUuid();
-        MutableText hover = new LiteralText("Yesterday: " + TimeDifferenceUtil.formatDiff(SessionManager.yesterday(uuid))).append(new LiteralText("\nToday: " + TimeDifferenceUtil.formatDiff(SessionManager.today(uuid)))).formatted(Formatting.RED, Formatting.ITALIC);
-        MutableText text = new LiteralText("You have ").formatted(Formatting.WHITE)
+        MutableText hover = new LiteralText("Gestern: " + TimeDifferenceUtil.formatDiff(SessionManager.yesterday(uuid))).append(new LiteralText("\nHeute: " + TimeDifferenceUtil.formatDiff(SessionManager.today(uuid)))).formatted(Formatting.RED, Formatting.ITALIC);
+        MutableText text = new LiteralText("Du hast ").formatted(Formatting.WHITE)
                 .append(new LiteralText(TimeDifferenceUtil.formatDiff(SessionManager.getTimeLeft(uuid))).formatted(Formatting.GRAY)).styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)))
-                .append(new LiteralText(" left.").formatted(Formatting.WHITE));
+                .append(new LiteralText(" übrig.").formatted(Formatting.WHITE));
         ctx.getSource().getPlayer().sendMessage(text, false);
         return 1;
     }
@@ -43,10 +43,10 @@ public class TimeLeftCommand {
     public static int executeOther(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         GameProfile profile = CommandUtil.getProfile(ctx, "player");
         UUID uuid = profile.getId();
-        MutableText hover = new LiteralText("Yesterday: " + TimeDifferenceUtil.formatDiff(SessionManager.yesterday(uuid))).append(new LiteralText("\nToday: " + TimeDifferenceUtil.formatDiff(SessionManager.today(uuid)))).formatted(Formatting.RED, Formatting.ITALIC);
-        MutableText text = new LiteralText(profile.getName() + " has ").formatted(Formatting.WHITE)
+        MutableText hover = new LiteralText("Gestern: " + TimeDifferenceUtil.formatDiff(SessionManager.yesterday(uuid))).append(new LiteralText("\nHeute: " + TimeDifferenceUtil.formatDiff(SessionManager.today(uuid)))).formatted(Formatting.RED, Formatting.ITALIC);
+        MutableText text = new LiteralText(profile.getName() + " hat ").formatted(Formatting.WHITE)
                     .append(new LiteralText(TimeDifferenceUtil.formatDiff(SessionManager.getTimeLeft(profile.getId()))).formatted(Formatting.GRAY)).styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover)))
-                    .append(new LiteralText(" left.").formatted(Formatting.WHITE));
+                    .append(new LiteralText(" übrig.").formatted(Formatting.WHITE));
         ctx.getSource().getPlayer().sendMessage(text, false);
         return 1;
     }

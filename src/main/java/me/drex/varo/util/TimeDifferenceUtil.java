@@ -17,11 +17,11 @@ public class TimeDifferenceUtil {
         }
         StringBuilder sb = new StringBuilder();
         int[] types = new int[]{Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND};
-        String[] names = new String[]{"year", "years",
-                "month", "months", "day",
-                "days", "hour", "hours",
-                "minute", "minutes", "second",
-                "seconds"};
+        String[] names = new String[]{"jahr", "jahre",
+                "monat", "monate", "tag",
+                "tag", "stunde", "stunden",
+                "minute", "minuten", "sekunden",
+                "sekunde"};
         int accuracy = 0;
         for (int i = 0; i < types.length; i++) {
             if (accuracy > 2) {

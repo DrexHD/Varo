@@ -21,9 +21,6 @@ public class MixinMinecraftServer {
     @Shadow
     private PlayerManager playerManager;
 
-    static String timeLeftSeconds = "Du wirst in %s Sekunden vom Server gekickt!";
-    static String timeLeftMinutes = "Du wirst in %s Minuten vom Server gekickt!";
-
     @Inject(method = "tick", at = @At(value = "HEAD"))
     public void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         Iterator<ServerPlayerEntity> iterator = this.playerManager.getPlayerList().iterator();
@@ -34,6 +31,8 @@ public class MixinMinecraftServer {
                 player.networkHandler.disconnect(new LiteralText("Zeit vorbei!").formatted(Formatting.RED));
             } else {
                 String message = "";
+                String timeLeftSeconds = "Du wirst in %s Sekunden vom Server gekickt!";
+                String timeLeftMinutes = "Du wirst in %s Minuten vom Server gekickt!";
                 switch ((int) timeLeft) {
                     case 900000: message = String.format(timeLeftMinutes, 15); break;
                     case 600000: message = String.format(timeLeftMinutes, 10); break;
