@@ -9,10 +9,10 @@ import net.minecraft.server.command.ServerCommandSource;
 public class ClearSessionsCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        LiteralArgumentBuilder<ServerCommandSource> clearsession = LiteralArgumentBuilder.literal("clearsession");
-        clearsession.requires(src -> src.hasPermissionLevel(2));
-        clearsession.executes(ClearSessionsCommand::execute);
-        dispatcher.register(clearsession);
+        LiteralArgumentBuilder<ServerCommandSource> clearsessions = LiteralArgumentBuilder.literal("clearsessions");
+        clearsessions.requires(src -> src.hasPermissionLevel(2));
+        clearsessions.executes(ClearSessionsCommand::execute);
+        dispatcher.register(clearsessions);
     }
 
     public static int execute(CommandContext<ServerCommandSource> ctx) {
