@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Iterator;
 import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
@@ -20,12 +21,37 @@ public class MixinMinecraftServer {
     @Shadow
     private PlayerManager playerManager;
 
+    static String timeLeftSeconds = "Du wirst in %s Sekunden vom Server gekickt!";
+    static String timeLeftMinutes = "Du wirst in %s Minuten vom Server gekickt!";
+
     @Inject(method = "tick", at = @At(value = "HEAD"))
     public void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        for (ServerPlayerEntity player : this.playerManager.getPlayerList()) {
+        Iterator<ServerPlayerEntity> iterator = this.playerManager.getPlayerList().iterator();
+        while (iterator.hasNext()) {
+            ServerPlayerEntity player = iterator.next();
             long timeLeft = SessionManager.getTimeLeft(player.getUuid());
             if (timeLeft <= 0) {
-                player.networkHandler.disconnect(new LiteralText("Time over!").formatted(Formatting.RED));
+                player.networkHandler.disconnect(new LiteralText("Zeit vorbei!").formatted(Formatting.RED));
+            } else {
+                String message = "";
+                switch ((int) timeLeft) {
+                    case 900000: message = String.format(timeLeftMinutes, 15); break;
+                    case 600000: message = String.format(timeLeftMinutes, 10); break;
+                    case 300000: message = String.format(timeLeftMinutes, 5); break;
+                    case 240000: message = String.format(timeLeftMinutes, 4); break;
+                    case 180000: message = String.format(timeLeftMinutes, 3); break;
+                    case 120000: message = String.format(timeLeftMinutes, 2); break;
+                    case 60000: message = String.format(timeLeftMinutes, 1); break;
+                    case 30000: message = String.format(timeLeftSeconds, 30); break;
+                    case 20000: message = String.format(timeLeftSeconds, 20); break;
+                    case 10000: message = String.format(timeLeftSeconds, 10); break;
+                    case 5000: message = String.format(timeLeftSeconds, 5); break;
+                    case 4000: message = String.format(timeLeftSeconds, 4); break;
+                    case 3000: message = String.format(timeLeftSeconds, 3); break;
+                    case 2000: message = String.format(timeLeftSeconds, 2); break;
+                    case 1000: message = String.format(timeLeftSeconds, 1); break;
+                }
+                if (!message.equals("")) player.sendMessage(new LiteralText(message).formatted(Formatting.RED), false);
             }
         }
     }
