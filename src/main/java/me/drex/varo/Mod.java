@@ -1,5 +1,6 @@
 package me.drex.varo;
 
+import me.drex.varo.commands.ClearSessionsCommand;
 import me.drex.varo.commands.TimeLeftCommand;
 import me.drex.varo.commands.TimePlayedCommand;
 import me.drex.varo.session.SessionManager;
@@ -27,6 +28,7 @@ public class Mod implements DedicatedServerModInitializer {
             }
         });
         CommandRegistrationCallback.EVENT.register((dispatcher, b) -> {
+            ClearSessionsCommand.register(dispatcher);
             TimePlayedCommand.register(dispatcher);
             TimeLeftCommand.register(dispatcher);
         });

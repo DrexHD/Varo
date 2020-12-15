@@ -20,8 +20,8 @@ public class TimeDifferenceUtil {
         String[] names = new String[]{"jahr", "jahre",
                 "monat", "monate", "tag",
                 "tag", "stunde", "stunden",
-                "minute", "minuten", "sekunden",
-                "sekunde"};
+                "minute", "minuten", "sekunde",
+                "sekunden"};
         int accuracy = 0;
         for (int i = 0; i < types.length; i++) {
             if (accuracy > 2) {

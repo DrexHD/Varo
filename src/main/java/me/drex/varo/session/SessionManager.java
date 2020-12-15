@@ -4,6 +4,7 @@ import me.drex.varo.Mod;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,6 +41,13 @@ public class SessionManager {
             data.put(uuid, entries);
         }
         loaded = true;
+    }
+
+    public static void reset() {
+        data.clear();
+        for (ServerPlayerEntity player : Mod.server.getPlayerManager().getPlayerList()) {
+            addSession(player.getUuid());
+        }
     }
 
     public static SessionEntry getCurrentSession(UUID uuid) {
